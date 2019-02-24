@@ -1,77 +1,44 @@
-[![Build Status](https://travis-ci.org/RobersonLab/motif_scraper.svg?branch=master)](https://travis-ci.org/RobersonLab/motif_scraper)
+[![Build Status](https://travis-ci.org/eroberson/multimedia_wrangler.svg?branch=master)](https://travis-ci.org/eroberson/multimedia_wrangler)
 
-# Motif Scraper
-Pythonic tool to search for degenerate motif matches in FASTA sequence files.
+# Multimedia wrangler
+This is a Python tool for cleaning up directories of images and videos into a structured order. **Important warning** - this tool attempts to avoid clobbering existing files, so the output directory should **not** be the same as th input directory.
+
+Video ExIf extraction is not currently built in, so video files are **not** renamed using image creation information.
+
+Steps
+=====
+1. Assert the source and output directory are not the same.
+2. Make output directory if it doesn't exist.
+3. Crawl the output directory taking the md5 hash of every file. This assures that different filenames would result in duplicates.
+4. Crawl input directory.
+5. For each file, get the md5 hash. If it exists in the hash (either from the output directory or previously encountered in the input), ignore it. If not, add the hash to the dictionary.
+6. For new videos, move to a video directory.
+7. For new images, check for ExIf information. If none exists, move to an image sub-directory for images with no meta info. If ExIf exists, parse it to get the creation timestamp. Rename the file with the timestamp. If a file with that name exists, appened a number to the timestamp to make it unique. Check if it has been encountered already.
 
 ## Installation
 Motif scraper is available via pip or GitHub download.
 We **HIGHLY** recommend installing in a Python virtual environment.
 
 ```bash
-pip install motif_scraper
+pip install multimedia-wrangler
 ```
 
 Or user install
 
 ```bash
-pip install --user motif_scraper
+pip install --user multimedia-wrangler
 ```
 
 Or install from GitHub clone.
 
 ```bash
-git clone https://github.com/RobersonLab/motif_scraper.git
+git clone https://github.com/eroberson/multimedia_wrangler.git
 git checkout vN.N.N # Choose highest version tag instead of vN.N.N
 
 pip install -e .
 ```
 
 ## Usage
-
-Find all sites for the CTCF motif NNDCCACYAGRKGGCASYR in GRCh38.
-
 ```bash
-motif_scraper --motif NNDCCACYAGRKGGCASYR --outputFile ctcf_sites.csv --search_strand=both GRCh38.fa
 ```
 
-Find CTCF sites on chromosome 1 only.
-
-```bash
-motif_scraper -r chr1 --motif NNDCCACYAGRKGGCASYR --outputFile ctcf_sites.csv --search_strand=both GRCh38.fa
-```
-
-Find CTCF sites only from position 10,000 to position 10,000,000 on chromosome 1.
-
-```bash
-motif_scraper -r chr1:10000-10000000 --motif NNDCCACYAGRKGGCASYR --outputFile ctcf_sites.csv --search_strand=both GRCh38.fa
-```
-
-Find CTCF match sites only on the top strand, using 10 processors.
-
-```bash
-motif_scraper --cores 10 --motif NNDCCACYAGRKGGCASYR --outputFile ctcf_sites.csv --search_strand=+1 GRCh38.fa
-```
-
-Search an Ensembl download of all protein coding transcript 3' UTRs for hsa-miR-10a sites on minus strand.
-
-```bash
-motif_scraper --cores 10 --motif TACCCTGTAGATCCGAATTTGTG --outputFile mir10a_sites.csv --search_strand=-1 GRCh38_3pUTRs.fa
-```
-
-Get debugging messages to troubleshoot code problems.
-
-```bash
-motif_scraper --loglevel DEBUG --cores 10 --motif TACCCTGTAGATCCGAATTTGTG --outputFile mir10a_sites.csv --search_strand=-1 GRCh38_3pUTRs.fa
-```
-
-Search for all motifs contained in a file.
-
-```bash
-motif_scraper --motif_file many_motifs.txt --outputFile many_motif_sites.csv GRCh38
-```
-
-Directly input a valid regular expression instead of a sequence motif
-
-```bash
-motif_scraper --motif N{19}CTR{3} --valid_regex GRCh38.fa
-```
