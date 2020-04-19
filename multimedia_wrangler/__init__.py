@@ -19,12 +19,12 @@ import sys
 ####################
 __script_path__ = sys.argv[0]
 __script_name__ = __script_path__.split('/')[-1].split('\\')[-1]
-__version__ = '0.0.1'
+__version__ = '1.0.0'
 
 #############
 # functions #
 #############
-def BufferedReadMd5Hash( fname, byteLimit=2 ** 11 ):
+def BufferedReadMd5Hash( fname, byteLimit = 2 ** 11 ):
 	"""Function to read the MD5 hash of a file, using buffering for large files"""
 	
 	hasher = hashlib.md5()
@@ -37,7 +37,7 @@ def BufferedReadMd5Hash( fname, byteLimit=2 ** 11 ):
 	return str( hasher.hexdigest() )
 	
 def GetNewFilenameFromExif( fname ):
-	"""For an image file, use EXIF to get DateTimeOriginal, DateTimeDigitized, or DateTime. Extract into new strings used to organize files"""
+	"""For an image file, use EXIF to get DateTimeOriginal or DateTimeDigitized. Extract into new strings used to organize files"""
 	try:
 		info = Image.open( fname )._getexif()
 		exif_dict = {}
