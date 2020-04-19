@@ -16,7 +16,7 @@ import sys
 ###################################
 # import from initialization file #
 ###################################
-from multimedia_wranger import __script_name__, __version__, BufferedReadMd5Hash, GetNewFilenameFromExif, MakeDirIfNotExists, FilenameTestIfExist
+from multimedia_wrangler import __script_name__, __version__, BufferedReadMd5Hash, GetNewFilenameFromExif, MakeDirIfNotExists, FilenameTestIfExist
 
 def run():
 	##################
@@ -34,18 +34,18 @@ def run():
 	#############
 	# arg parse #
 	#############
-	parser = argparse.ArgumentParser( prog=__script_name__, epilog="%s v%s" % ( __script_name__, __version__ ) )
+	parser = argparse.ArgumentParser( prog = __script_name__, epilog = "%s v%s" % ( __script_name__, __version__ ) )
 	
-	parser.add_argument( "source_directory", help="Directory to walk and find files for organizing" )
-	parser.add_argument( "target_directory", help="Directory where files will be moved to for organization" )
-	parser.add_argument( "--pic_dir", help = "Name of image subfolder in target_directory", default="pics" )
-	parser.add_argument( "--vid_dir", help = "Name of video subfolder in target_directory", default="vids" )
-	parser.add_argument( "--noExifDir", help="If image has no Exif, where do we send it?", default="NoExif" )
-	parser.add_argument( "--readbuffer", help="Size of the buffer used for hashing. Larger buffers may be faster for large files.", type=int, default = 2 ** 11 )
+	parser.add_argument( "source_directory", help = "Directory to walk and find files for organizing" )
+	parser.add_argument( "target_directory", help = "Directory where files will be moved to for organization" )
+	parser.add_argument( "--pic_dir", help = "Name of image subfolder in target_directory", default = "pics" )
+	parser.add_argument( "--vid_dir", help = "Name of video subfolder in target_directory", default = "vids" )
+	parser.add_argument( "--noExifDir", help = "If image has no Exif, where do we send it?", default = "NoExif" )
+	parser.add_argument( "--readbuffer", help = "Size of the buffer used for hashing. Larger buffers may be faster for large files.", type = int, default = 2 ** 11 )
 	
-	parser.add_argument( "--dryrun", help="Go through the motions, but don't move anything", default=False, action='store_true' )
+	parser.add_argument( "--dryrun", help="Go through the motions, but don't move anything", default = False, action = 'store_true' )
 	
-	parser.add_argument( "--loglevel", choices=[ 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL' ], default='INFO' )
+	parser.add_argument( "--loglevel", choices = [ 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL' ], default = 'INFO' )
 
 	input_args = parser.parse_args()
 	
@@ -113,7 +113,7 @@ def run():
 	# another already exists.                       #
 	#################################################
 	for walking_dir in [ out_pic_path, out_vid_path ]:
-		for root, dirs, files in os.walk( walking_dir, topdown=False ):
+		for root, dirs, files in os.walk( walking_dir, topdown = False ):
 			for curr_fname in files:
 				extension = curr_fname.rstrip().split( "." )[-1].lower()
 				
