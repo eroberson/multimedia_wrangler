@@ -25,7 +25,7 @@ setup(
 	"Programming Language :: Python :: 3.6"
 	],
 	keywords='organizing large picture collections by EXIF information',
-	install_requires = ['PIL'],
+	install_requires = ['pillow'],
 	entry_points = {'console_scripts':["multimedia_wrangler = multimedia_wrangler.__main__:run"]},
 	test_suite = 'nose.collector',
 	tests_require = ['nose']
