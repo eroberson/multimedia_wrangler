@@ -66,6 +66,8 @@ def GetNewFilenameFromExif( fname ):
 		ret_list = [ None, None, None ]
 	except ValueError:
 		ret_list = [ None, None, None ]
+	except Exception:
+		ret_list = [ None, None, None ]
 	return ret_list
 
 def MakeDirIfNotExists( dir_path ):
