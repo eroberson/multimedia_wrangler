@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/eroberson/multimedia_wrangler.svg?branch=master)](https://travis-ci.org/eroberson/multimedia_wrangler)
-
 # Multimedia wrangler
 This is a Python tool for cleaning up directories of images and videos into a structured order. **Important warning** - this tool attempts to avoid clobbering existing files, so the output directory should **not** be the same as th input directory.
 
